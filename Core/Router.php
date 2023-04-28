@@ -42,7 +42,7 @@ class Router
         $regexRoute = '';
         foreach ($segments as $segment){
             if(preg_match('/^{[a-zA-Z-_]+}$/', $segment)){
-                $regexRoute .= '\/([a-zA-Z-\d]+)';
+                $regexRoute .= '\/([ a-zA-Z-\d]+)';
             }else{
                 $regexRoute .= "\/".$segment;
             }
@@ -74,9 +74,9 @@ class Router
 
     public function handleRoute(): void
     {
-        echo"<pre>";
+
         foreach (self::${$this->method} as $route){
-            if(preg_match("/^".$route['regex']."$/",$this->path,$params)){
+            if(preg_match("/^".$route['regex']."$/",urldecode($this->path),$params)){
                 array_shift($params);
                 if(is_callable($route['action'])){
                     call_user_func_array($route['action'],$params);
@@ -91,6 +91,6 @@ class Router
             }
 
         }
-        print_r("jdjdjdjdjdjdjdjd");
+        print_r("hec bir sehife tapilmadi");
     }
 }
